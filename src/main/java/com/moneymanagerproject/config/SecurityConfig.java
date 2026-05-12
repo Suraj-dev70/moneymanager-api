@@ -33,12 +33,17 @@ public class SecurityConfig {
 
         return http
                 .csrf(csrf -> csrf.disable())
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/status", "/register", "/login","/activate,/health")
-                        .permitAll()
+                        .requestMatchers(
+                                "/status",
+                                "/register",
+                                "/login",
+                                "/activate",
+                                "/health"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
-                .httpBasic(Customizer.withDefaults())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
