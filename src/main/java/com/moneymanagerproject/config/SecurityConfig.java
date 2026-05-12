@@ -33,21 +33,14 @@ public class SecurityConfig {
 
         return http
                 .csrf(csrf -> csrf.disable())
-                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/status",
-                                "/register",
-                                "/login",
-                                "/activate",
-                                "/health"
-                        ).permitAll()
+                        .requestMatchers("/status", "/register", "/login","/activate")
+                        .permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -58,7 +51,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.addAllowedOrigin("*");
-        corsConfiguration.setAllowedMethods(List.of("GET","POST","PUT","DLETE","OPTIONS"));
+        corsConfiguration.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
         corsConfiguration.setAllowedHeaders(List.of("Authorization","Content-Type","Accept"));
         corsConfiguration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
