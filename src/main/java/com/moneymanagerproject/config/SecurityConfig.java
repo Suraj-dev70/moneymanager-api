@@ -41,10 +41,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/register",
-                                "/status",
                                 "/login",
+                                "/status",
                                 "/activate",
-                                "/health"
+                                "/health",
+                                "/error"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
