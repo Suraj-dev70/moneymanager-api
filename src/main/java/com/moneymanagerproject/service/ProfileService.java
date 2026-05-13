@@ -39,12 +39,18 @@ public class ProfileService {
     public ProfileDto registerProfile(ProfileDto profileDto) {
         ProfileEntity newProfile = toEntity(profileDto);
         newProfile.setActivationToken(UUID.randomUUID().toString());
-        newProfile= profileRepository.save(newProfile);
-        //send activation link for email
-        String activationLink=activationUrl+"/api/v3.5.13/activate?token="+newProfile.getActivationToken();
-        String subject="Activate Your Money Manager Account";
-        String body="Click to activate your Money Manager Account="+activationLink;
-        emailService.sendSimpleMail(newProfile.getEmail(),subject,body);
+        newProfile = profileRepository.save(newProfile);
+
+        try {
+            String activationLink = activationUrl + "/api/v3.5.13/activate?token="
+                    + newProfile.getActivationToken();
+            String subject = "Activate Your Money Manager Account";
+            String body = "Click to activate: " + activationLink;
+            emailService.sendSimpleMail(newProfile.getEmail(), subject, body);
+        } catch (Exception e) {
+            System.err.println("Email failed: " + e.getMessage());
+        }
+
         return toDto(newProfile);
     }
 
