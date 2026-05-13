@@ -33,18 +33,19 @@ public class SecurityConfig {
 
         return http
                 .csrf(csrf -> csrf.disable())
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
 
-                                "/status",
+                                "/api/v3.5.13/status",
 
-                                "/register",
+                                "/api/v3.5.13/register",
 
-                                "/login",
+                                "/api/v3.5.13/login",
 
-                                "/activate",
+                                "/api/v3.5.13/activate",
 
-                                "/health"
+                                "/api/v3.5.13/health"
 
                         ).permitAll()
                         .anyRequest().authenticated()
