@@ -42,7 +42,7 @@ public class ProfileService {
         newProfile = profileRepository.save(newProfile);
 
         try {
-            String activationLink = activationUrl + "/api/v3.5.13/activate?token="
+            String activationLink = activationUrl + "/activate?token="
                     + newProfile.getActivationToken();
             String subject = "Activate Your Money Manager Account";
             String body = "Click to activate: " + activationLink;
